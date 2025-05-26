@@ -139,15 +139,41 @@ try {
 
   await workbook.xlsx.writeFile(filePath);
 
+var find_day_noon = '';
+var get_Time = new Date();
+
+var get_Current_Date = get_Time.toLocaleString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  second: 'numeric',
+  hour12: true
+});
+
+var hour = get_Time.getHours();
+
+if (hour < 12) {
+  find_day_noon = "Good Morning";
+} else if (hour < 17) {
+  find_day_noon = "Good Afternoon";
+} else {
+  find_day_noon = "Good Evening";
+}
+  
+
   await transporter.sendMail({
     ...mailOptions,
     subject: `Performance Review - ${employee_name}`,
-    text: `Good Morning,
-Please find attached the performance review for  ${employee_name}.
-Kindly review the details and let me know if any further information or clarification is required.
-Thank you for your time and support.
-Best regards,
-${reviewer_name}.`,
+    html: `
+        <p><strong>Hi ${find_day_noon},</strong>
+  <br>
+  <br>
+  Please find attached the performance review for <strong>${employee_name}.</strong><br>
+  Kindly review the details and let me know if any further information or clarification is required.<br>
+  Thank you for your time and support.</p>
+  <p><strong>Best regards,</strong><br>${reviewer_name}</p>`,
     attachments: [
       {
         filename: fileName,
