@@ -139,18 +139,15 @@ try {
 
   await workbook.xlsx.writeFile(filePath);
 
-
   await transporter.sendMail({
     ...mailOptions,
     subject: `Performance Review - ${employee_name}`,
-    html: `
-        <p><strong>Hi,</strong>
-  <br>
-  <br>
-  Please find attached the performance review for <strong>${employee_name}.</strong><br>
-  Kindly review the details and let me know if any further information or clarification is required.<br>
-  Thank you for your time and support.</p>
-  <p><strong>Best regards,</strong><br>${reviewer_name}</p>`,
+    text: `Good Morning,
+Please find attached the performance review for  ${employee_name}.
+Kindly review the details and let me know if any further information or clarification is required.
+Thank you for your time and support.
+Best regards,
+${reviewer_name}.`,
     attachments: [
       {
         filename: fileName,
